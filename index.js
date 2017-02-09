@@ -3,15 +3,21 @@
 // 3rd
 const Nightmare = require('nightmare');
 const nightmare = Nightmare({
-    show: true, webPreferences: {
+    openDevTools: {
+        mode: 'detach'
+    },
+    show: true,
+    webPreferences: {
         webSecurity:false
     }
-});
+})
+    .useragent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36')
+    .wait(3000);
 const urlHelper = require('url');
 
 // const
 const passed = {};
-const fakeNewsSites = [ 'http://occupydemocrats.com/' ];
+const fakeNewsSites = [ 'http://detonate.com/celebs-who-endorsed-donald-trump-for-president-2/', 'http://occupydemocrats.com/' ];
 let stack = fakeNewsSites.map(url => { return { url, path: [] }; });
 const sponsors = {};
 const adSites = {};
@@ -20,10 +26,11 @@ const LIKELY_IFRAMES = [
     /facebook\.com$/,
     /youtube\.com$/,
     /instagram\.com$/,
-    /twitter\.com$/
+    /twitter\.com$/,
+    /disqus\.com$/
 ];
 const SKIP_HOSTNAMES = [
-    /^http:\/\/www.adblade.com\/$/
+    /adblade.com$/
 ];
 
 function domainFilter(url) {
@@ -152,6 +159,7 @@ function processNextInStack() {
                 .concat(stack);
 
             let promiseChain;
+            /*
             sponsorUrls.forEach((url) => {
                 const currentHostname = urlHelper.parse(url).hostname;
                 if (LIKELY_IFRAMES.reduce((found, iframe) => found || iframe.test(currentHostname), false)) {
@@ -201,12 +209,12 @@ function processNextInStack() {
                     promiseChain = checkThisSponsor();
                 }
             });
-
             if (promiseChain) {
                 promiseChain.then(processNextInStack);
             } else {
                 processNextInStack();
             }
+            */
         }).catch(function (error) {
             console.error('Search failed:', error);
         });
