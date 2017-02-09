@@ -1,0 +1,15 @@
+{
+  "name": "politics",
+  "version": "0.0.1",
+  "description": "For scouring the web for companies that support fake news",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nightmare": "^2.9.1",
+    "nightmare-iframe-manager": "github:rosshinkley/nightmare-iframe-manager"
+  }
+}
