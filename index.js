@@ -11,11 +11,11 @@ const urlHelper = require('url');
 
 // const
 const passed = {};
-const fakeNewsSites = [ 'http://occupydemocrats.com/2016/08/19/donald-trumps-campaign-goes-full-racist-calls-obama-half-breed-negro-2/', 'http://occupydemocrats.com/' ];
+const fakeNewsSites = [ 'http://occupydemocrats.com/' ];
 let stack = fakeNewsSites.map(url => { return { url, path: [] }; });
 const sponsors = {};
 const adSites = {};
-const AD_INDICATORS = ['ads by', 'advertisement', 'sponsored links'];
+const AD_INDICATORS = ['ads by', 'advertisement', 'sponsored links', 'sponsored by'];
 const LIKELY_IFRAMES = [
     /facebook\.com$/,
     /youtube\.com$/,
@@ -23,7 +23,7 @@ const LIKELY_IFRAMES = [
     /twitter\.com$/
 ];
 const SKIP_HOSTNAMES = [
-    /adblade\.com$/
+    /^http:\/\/www.adblade.com\/$/
 ];
 
 function domainFilter(url) {
@@ -80,6 +80,7 @@ function processNextInStack() {
 
     nightmare
         .goto(url)
+        .wait(5000)
         .evaluate((AD_INDICATORS, hostname) => {
             function findElsWithText(textOptions) {
                 let elements = [].concat(Array.from(document.body.children));
