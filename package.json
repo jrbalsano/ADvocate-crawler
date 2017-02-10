@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "minimist": "^1.2.0",
+    "mongodb": "^2.2.22",
     "nightmare": "^2.9.1",
     "nightmare-iframe-manager": "github:rosshinkley/nightmare-iframe-manager"
   }
